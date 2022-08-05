@@ -1,0 +1,30 @@
+apply plugin: 'war'
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+
+    compile group: 'org.hsqldb',
+            name: 'hsqldb',
+            version: '2.4.0'
+
+    compile group: 'commons-dbcp',
+            name: 'commons-dbcp',
+            version: '1.4'
+
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.0'
+
+    compileOnly 'javax.servlet:javax.servlet-api:3.1.0'
+
+    compileOnly group: 'org.projectlombok',
+            name: 'lombok',
+            version: '1.16.18'
+}
+
+gretty {
+    contextPath = '/'
+    managedClassReload = true
+    debugSuspend = false
+}

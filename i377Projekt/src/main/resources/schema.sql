@@ -1,0 +1,21 @@
+DROP SCHEMA public CASCADE;
+
+CREATE SEQUENCE seq1 START WITH 1;
+
+CREATE TABLE CUSTOMER (
+
+   id BIGINT NOT NULL PRIMARY KEY,
+
+   firstName VARCHAR(255) NOT NULL,
+
+   lastName VARCHAR(255) NULL,
+
+   code VARCHAR (255)NULL
+
+);
+
+INSERT INTO CUSTOMER (id, firstName, lastName,code)
+VALUES(NEXT VALUE FOR seq1, 'Jack', 'Smith','C1');
+
+INSERT INTO CUSTOMER (id, firstName, lastName,code)
+VALUES (NEXT VALUE FOR seq1, 'Jane', 'Smith','C2');

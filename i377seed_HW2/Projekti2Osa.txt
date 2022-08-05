@@ -1,0 +1,64 @@
+Projekti 2. osa
+
+Luua rakendus, mis lubab kliente sisestada, välja näidata ja kustutada.
+
+Esimene servlet on klientide lisamiseks läbi Html vormi. 
+Vormist saadetakse parameeteri name väärtusena kliendi eesnimi.
+Päringu võtab vastu servlet-i doPost meetod.
+
+Päring:
+
+  POST /customers/form HTTP/1.1
+  Host: localhost:8080
+  Content-Type: application/x-www-form-urlencoded
+  
+  name=Jaak
+
+Teine servlet on sisestatud andmete vaatamiseks, andmete lisamiseks Json 
+formaadist ja andmete kustutamiseks. Meetodid vastavalt doGet, doPost ja doDelete
+
+1. Vaatamine
+
+  GET /api/customers HTTP/1.1
+  Host: localhost:8080
+
+  Väljundi näide:
+
+  [
+      {
+          "id": 1,
+          "firstName": "Mari",
+          "lastName": "Kask",
+          "code": "A123"
+      },
+      ....
+  ]
+
+  Ehk näidatakse listi kõikide sisestatud klientidega
+
+2. Sisestamine Json formaadist
+
+  POST /api/customers HTTP/1.1
+  Host: localhost:8080
+  Content-Type: application/json
+  
+  { "firstName": "Mari", "lastName": "Kask", "code": "A123" }
+
+3. Andmete kustutamine
+
+  DELETE /api/customers HTTP/1.1
+  Host: localhost:8080
+
+  Kustutatakse kõik sisestatud kliendid
+
+Töötav näidis:
+  http://mkalmo.xyz/i377/examples/hw2/
+
+Projekt peab läbima järgmisd testid:
+  https://bitbucket.org/mkalmo/hwtests/src/master/src/main/java/tests/Hw2.java
+
+NB! Testide projekti kasutamiseks IDEA-s peab olema installidud Lombok IDEA plugin.
+
+    Pärast projekti importi peab sisse lülitama annotatsioonide töötluse: 
+    File -> Settings ->  Build, .. -> Compiler -> Annotation Processors -> 
+    linnuke "Enable annotation processing"

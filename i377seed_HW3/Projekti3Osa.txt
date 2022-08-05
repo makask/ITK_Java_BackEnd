@@ -1,0 +1,45 @@
+Projekti 3. osa
+
+Kasutatavad tehnoloogiad: Servlet, Jdbc, Hsql, Gradle
+
+1. Panna eelmises osas tehtud rakendus kasutama Hsql andmebaasi.
+
+  Baasi skeemi loomine peab toimuma rakenduse paigaldamise ajal, 
+  ServletContextListener.contextInitialized() meetodis.
+  Skeem peaks olema eraldi failis, mitte otse Java-sse kirutatuna.
+  Baasi ei tohi kettale kirjutada. Ehk õige baasi url on: jdbc:hsqldb:mem:<baasi nimi>.
+  Baasiga suhtlemiseks kasutada DAO mustrit.
+
+2. Lisada juurde võimalus ühe kliendi vaatamiseks ja ühe kliendi kustutamiseks.
+
+  Ühe kliendi vaatamise päringu näide
+  
+  GET /api/customers?id=1 HTTP/1.1
+  Host: localhost:8080
+
+  Vastuse näide:
+  
+  {
+    "id": 1,
+    "firstName": "Mari",
+    "lastName": "Kask",
+    "code": "A123"
+  }
+  
+  Ühe kliendi kustutamise päringu näide
+  
+  DELETE /api/customers?id=1 HTTP/1.1
+  Host: localhost:8080
+  
+  
+Töötav näidis:
+  http://mkalmo.xyz/i377/examples/hw3
+
+Projekt peab läbima järgmisd testid:
+  https://bitbucket.org/mkalmo/hwtests/src/master/src/main/java/tests/Hw3.java
+
+NB! Testide projekti kasutamiseks IDEA-s peab olema installidud Lombok IDEA plugin.
+
+    Pärast projekti importi peab sisse lülitama annotatsioonide töötluse: 
+    File -> Settings ->  Build, .. -> Compiler -> Annotation Processors -> 
+    linnuke "Enable annotation processing"

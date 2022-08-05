@@ -1,0 +1,53 @@
+Projekti 5. osa
+
+Pange neljandas osas tehtud rakendus kasutama Spring Mvc raamistikku.
+See tähendab, et servlet-ide asemele tuleb Spring Mvc kontroller 
+vastavate meetodite ja mapping-utega.
+
+1. Muutuvad ühe kliendi küsimise ja ühe kliendi kustutamise url-id.
+   /api/customers?id=2 saab olema /api/customers/2
+   Ehk id pole parameetrina vaid url-i osana.
+
+2. Lisandub võimalus kliendi otsimiseks märksõna alusel.
+   Päring url-ile /api/customers/search?key=<otsisõna>
+   peaks tagastama kliendid, kelle eesnimi, perekonnanimi või kood
+   sisaldab otsisõna (rõhk sõnal sisaldab).
+
+3. Lisada rakendusele sisendi valideerimise võimalus. Valideerimise reeglid 
+   määrata JSR303 annotatsioonidega @NotNull, @Size ja @Pattern.
+   Kui postitatakse andmed, mis ei valideeru peaks rakendus vastama HTTP 
+   koodiga 400 (bad request) ja tagastama info selle kohta, mis on valesti.
+
+   Eesnimi, perekonnanimi ja kood ei tohi olla tühjad (@NotNull).
+   Väärtuse pikkus peab olema kahest märgist 15-ni.
+   Kood võib sisaldada ainult väikeseid ja suuri tähti ning numbreid.
+
+   Vead tagastage kujul:
+   
+   { 
+     "errors": [
+       { "code": "NotNull.customer.code",
+         "arguments": []
+       },
+       { "code": "Size.customer.firstName",
+         "arguments": ["15", "2"]
+       }
+     ]
+   }
+
+Baasi skeemi loomine ja näidisandmete sisestamine peab toimuma
+Rakenduse paigaldamise ajal, onStartup(ServletContext servletContext) meetodis.
+Skeem ja näidisandmed peaks olema eraldi failides, mitte otse Java-sse kirjutatuna.
+Baasi ei tohi kettale kirjutada ehk url-iks on jdbc:hsqldb:mem:<baasi nimi>.
+
+Töötav näidis:
+  http://mkalmo.xyz/i377/examples/hw5/
+
+Projekt peab läbima järgmised testid:
+  https://bitbucket.org/mkalmo/hwtests/src/master/src/main/java/tests/Hw5.java
+
+NB! Testide projekti kasutamiseks IDEA-s peab olema installidud Lombok IDEA plugin.
+
+    Pärast projekti importi peab sisse lülitama annotatsioonide töötluse: 
+    File -> Settings ->  Build, .. -> Compiler -> Annotation Processors -> 
+    linnuke "Enable annotation processing"

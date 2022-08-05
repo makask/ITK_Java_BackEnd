@@ -1,0 +1,68 @@
+Projekti 4. osa
+
+1. Lisada rakendusele klassifikaatorite info teenus. See on teenus, mis
+   väljastab kõik klassifikaatorid koos võimalike väärtustega.
+
+   Päringu näide:
+
+   GET /api/classifiers HTTP/1.1
+   Host: localhost:8080
+
+   Väljundi näide:
+
+   { 
+     "customerTypes": ["customer_type.private", "customer_type.corporate"],
+     "phoneTypes": ["phone_type.fixed", "phone_type.mobile"]
+   }
+
+
+2. Panna kolmandas osas tehtud rakendus kasutama JPA-d.
+   Seni kasutas rakendus JDBC-d otse, nüüd peaks see käima läbi JPA.
+   Näiteks kliendi leidmiseks id järgi kasutaksite meetodit:
+   public Customer findById(Long id) {
+        EntityManager em = null;
+        try {
+            em = JpaUtil.getFactory().createEntityManager();
+            return em.find(Customer.class, id);
+        } finally {
+            JpaUtil.closeQuietly(em);
+        }
+    }
+    JpaUtil saate praktikumis antud koodist.
+    "hibernate.hbm2ddl.auto" väärtus on "validate": veendub, et baasis on 
+    mappingule sobivad tabelid.
+    
+    Baasi skeemi loomine ja näidisandmete sisestamine peab toimuma
+	Rakenduse paigaldamise ajal, ServletContextListener.contextInitialized() meetodis.
+	Skeem ja näidisandmed peaks olema eraldi failides, mitte otse Java-sse kirjutatuna.
+	Baasi ei tohi kettale kirjutada (jdbc:hsqldb:mem:<baasi nimi>).
+    
+3. Lisage kliendi telefonide sisestamise võimalus. Kliendil võib olla mitu telefoni.
+   Telefoni kirje sisaldab id-d, numbrit ja telefoni tüüpi.
+   
+   Päringu näide:
+   
+   POST /api/customers HTTP/1.1
+   Host: localhost:8080
+   Content-Type: application/json
+  
+   { 
+     "firstName": "Jill",
+     "lastName": "Smith",
+     "phones": [
+                  {"id":null, "type":"phone_type.mobile", "value":"123"},
+                  {"id":null, "type":"phone_type.fixed", "value":"456"}
+               ]
+   }
+
+Töötav näidis:
+  http://mkalmo.xyz/i377/examples/hw4
+
+Projekt peab läbima järgmisd testid:
+  https://bitbucket.org/mkalmo/hwtests/src/master/src/main/java/tests/Hw4.java
+
+NB! Testide projekti kasutamiseks IDEA-s peab olema installidud Lombok IDEA plugin.
+
+    Pärast projekti importi peab sisse lülitama annotatsioonide töötluse: 
+    File -> Settings ->  Build, .. -> Compiler -> Annotation Processors -> 
+    linnuke "Enable annotation processing"

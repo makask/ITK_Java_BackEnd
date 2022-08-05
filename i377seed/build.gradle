@@ -1,0 +1,14 @@
+apply plugin: 'war'
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compileOnly 'javax.servlet:javax.servlet-api:3.1.0'
+}
+
+gretty {
+    contextPath = '/'
+    managedClassReload = true
+}
